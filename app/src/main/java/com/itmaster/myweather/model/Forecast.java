@@ -16,6 +16,7 @@ public class Forecast {
     private String  min;
     private String  pressure;
     private String humidity;
+    private int iconCode;
 
     public Forecast() {
     }
@@ -44,6 +45,14 @@ public class Forecast {
         this.humidity = humidity;
         this.description = description;
 
+    }
+
+    public int getIconCode() {
+        return iconCode;
+    }
+
+    public void setIconCode(int iconCode) {
+        this.iconCode = iconCode;
     }
 
     public String getCity() {
@@ -124,6 +133,23 @@ public class Forecast {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Forecast{" +
+                "city='" + city + '\'' +
+                ", time='" + time + '\'' +
+                ", date='" + date + '\'' +
+                ", weather='" + weather + '\'' +
+                ", description='" + description + '\'' +
+                ", wind='" + wind + '\'' +
+                ", max='" + max + '\'' +
+                ", min='" + min + '\'' +
+                ", pressure='" + pressure + '\'' +
+                ", humidity='" + humidity + '\'' +
+                '}';
     }
 }
 
