@@ -24,16 +24,19 @@ public class Parser {
 
             JSONObject jsonArray =  new JSONObject(data);
             JSONArray weather = getObjectArray("weather",jsonArray);
+
             JSONObject current = (JSONObject) weather.get(0);
             forecast.setDescription(getString("description",current));
             forecast.setIconCode(getInt("id",current));
             forecast.setCity(getString("name",jsonArray));
+
             JSONObject main = getObject("main",jsonArray);
             forecast.setWeather(getString("temp",main));
             forecast.setMax(getString("temp_max",main));
             forecast.setMin(getString("temp_min",main));
             forecast.setHumidity(getString("humidity",main));
             forecast.setPressure(getString("pressure",main));
+
             JSONObject wind = getObject("wind",jsonArray);
             forecast.setWind(getString("speed",wind));
 

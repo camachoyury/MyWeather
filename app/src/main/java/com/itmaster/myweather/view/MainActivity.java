@@ -1,15 +1,19 @@
-package com.itmaster.myweather;
+package com.itmaster.myweather.view;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.itmaster.myweather.R;
+import com.itmaster.myweather.Utils;
+import com.itmaster.myweather.controller.MainController;
 import com.itmaster.myweather.model.Forecast;
-
-import static android.R.attr.button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -24,12 +28,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView pressure;
     TextView humidity;
     Button button;
+    ProgressBar progressBar;
+    ImageView icon;
+    EditText inputCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        inputCity = (EditText) findViewById(R.id.inputCity);
         city = (TextView) findViewById(R.id.city);
         time = (TextView) findViewById(R.id.time);
         date = (TextView) findViewById(R.id.date);
@@ -40,15 +48,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pressure = (TextView) findViewById(R.id.pressure);
         humidity = (TextView) findViewById(R.id.humidity);
         button = (Button) findViewById(R.id.pronosticos);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        icon = (ImageView) findViewById(R.id.icon);
         button.setOnClickListener(this);
 
-        Forecast forecast = new Forecast("Buenos Aires", "12:30", "12-12-2017", "30", "3.4", "18", "-3", "45", "90%", "Nublado");
-        updateWeather(forecast);
+        new MainController(this).execute("Buenos%20Aires");
+
+
+//        Forecast forecast = new Forecast("Buenos Aires", "12:30", "12-12-2017", "30", "3.4", "18", "-3", "45", "90%", "Nublado");
+//        updateWeather(forecast);
 
     }
 
-    private void updateWeather(Forecast forecast) {
+    public void updateWeather(Forecast forecast) {
 
+        icon.setImageResource(Utils.getIconResourceForWeatherCondition(forecast.getIconCode()));
         city.setText(forecast.getCity());
         time.setText(forecast.getTime());
         date.setText(forecast.getDate());
@@ -66,9 +80,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(view == button){
 
+            String value = inputCity.getText().toString();
 
-            Intent intent = new Intent(this, ForecastActivity.class);
-            startActivity(intent);
+            new MainController(this).execute(value);
         }
     }
+
+
+    public void showProgressbar(){
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgressbar(){
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
 }

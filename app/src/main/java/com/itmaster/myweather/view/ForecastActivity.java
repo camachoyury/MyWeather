@@ -1,4 +1,4 @@
-package com.itmaster.myweather;
+package com.itmaster.myweather.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.itmaster.myweather.R;
 import com.itmaster.myweather.model.Forecast;
 
 import java.util.ArrayList;
