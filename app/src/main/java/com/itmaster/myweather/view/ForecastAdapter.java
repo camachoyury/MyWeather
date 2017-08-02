@@ -22,11 +22,9 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
     private List<Forecast> forecastList;
 
-
     public ForecastAdapter(List<Forecast> forecasts){
-        forecastList =  forecasts;
+        this.forecastList =  forecasts;
     }
-
 
     @Override
     public ForecastViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

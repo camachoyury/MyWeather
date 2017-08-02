@@ -8,6 +8,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.itmaster.myweather.R;
+import com.itmaster.myweather.controller.Constants;
+import com.itmaster.myweather.controller.ForecastController;
 import com.itmaster.myweather.model.Forecast;
 
 import java.util.ArrayList;
@@ -30,12 +32,15 @@ public class ForecastActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forecast);
 
         adapter = new ForecastAdapter(forecastList);
+
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         mLinearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLinearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-        loadData();
+
+        new ForecastController(this).execute("Buenos Aires", Constants.FORECAST);
+
     }
 
 
@@ -56,6 +61,20 @@ public class ForecastActivity extends AppCompatActivity {
 
 
         adapter.notifyDataSetChanged();
+
+
+    }
+
+
+    public void updateForecast(List<Forecast> forecastList){
+
+//        forecastList.addAll(forecastList);
+        adapter = new ForecastAdapter(forecastList);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+
+
 
 
     }
