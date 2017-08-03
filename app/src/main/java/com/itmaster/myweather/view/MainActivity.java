@@ -3,6 +3,7 @@ package com.itmaster.myweather.view;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,9 @@ import com.itmaster.myweather.R;
 import com.itmaster.myweather.Utils;
 import com.itmaster.myweather.controller.MainController;
 import com.itmaster.myweather.model.Forecast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -53,6 +57,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button.setOnClickListener(this);
 
         new MainController(this).execute("Buenos%20Aires");
+
+
+
+
+
+
 
 
 //        Forecast forecast = new Forecast("Buenos Aires", "12:30", "12-12-2017", "30", "3.4", "18", "-3", "45", "90%", "Nublado");

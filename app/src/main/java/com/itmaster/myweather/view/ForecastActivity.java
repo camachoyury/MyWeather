@@ -6,11 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.itmaster.myweather.R;
 import com.itmaster.myweather.controller.Constants;
 import com.itmaster.myweather.controller.ForecastController;
 import com.itmaster.myweather.model.Forecast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +36,19 @@ public class ForecastActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forecast);
 
-        adapter = new ForecastAdapter(forecastList);
+        adapter = new ForecastAdapter(forecastList, new ForecastAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Forecast forecast , int source) {
+                if (source == ForecastAdapter.IMAGE_SOURCE){
+                    Toast.makeText(getBaseContext(),"ESTE ES EL CLIMA : "+forecast.getDescription(), Toast.LENGTH_LONG).show();
+                }if (source == ForecastAdapter.LAYOUT_SOURCE){
+
+                    Toast.makeText(getBaseContext(),"ESTE ES EL CLIMA MAXIMO: "+forecast.getMax(), Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        });
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         mLinearLayoutManager = new LinearLayoutManager(this);
@@ -69,7 +86,20 @@ public class ForecastActivity extends AppCompatActivity {
     public void updateForecast(List<Forecast> forecastList){
 
 //        forecastList.addAll(forecastList);
-        adapter = new ForecastAdapter(forecastList);
+        adapter = new ForecastAdapter(forecastList, new ForecastAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Forecast forecast , int source) {
+                if (source == ForecastAdapter.IMAGE_SOURCE){
+                    Toast.makeText(getBaseContext(),"ESTE ES EL CLIMA : "+forecast.getDescription(), Toast.LENGTH_LONG).show();
+                }if (source == ForecastAdapter.LAYOUT_SOURCE){
+
+                    Toast.makeText(getBaseContext(),"ESTE ES EL CLIMA MAXIMO: "+forecast.getMax(), Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        });
+
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 

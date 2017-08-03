@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.itmaster.myweather.R;
+import com.itmaster.myweather.Utils;
 import com.itmaster.myweather.model.Forecast;
 
 
@@ -21,9 +23,13 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
 
     private List<Forecast> forecastList;
+    public OnItemClickListener listener;
+    public final static int IMAGE_SOURCE = 1;
+    public final static int LAYOUT_SOURCE = 2;
 
-    public ForecastAdapter(List<Forecast> forecasts){
+    public ForecastAdapter(List<Forecast> forecasts, OnItemClickListener listener){
         this.forecastList =  forecasts;
+        this.listener = listener;
     }
 
     @Override
@@ -35,12 +41,28 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     @Override
     public void onBindViewHolder(ForecastViewHolder holder, int position) {
 
-        Forecast forecast = forecastList.get(position);
+        final Forecast forecast = forecastList.get(position);
         holder.description.setText(forecast.getDescription());
         holder.humidity.setText(forecast.getHumidity());
         holder.weekday.setText(forecast.getDate());
         holder.max.setText(forecast.getMax());
         holder.min.setText(forecast.getMin());
+        holder.icon.setImageResource(Utils.getIconResourceForWeatherCondition(forecast.getIconCode()));
+        holder.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onItemClick(forecast,IMAGE_SOURCE);
+            }
+        });
+        holder.rightLayout.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                listener.onItemClick(forecast,LAYOUT_SOURCE);
+            }
+        });
+
+
     }
 
     @Override
@@ -56,6 +78,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         private TextView description;
         private TextView max;
         private TextView min;
+        private LinearLayout layoutItem;
+        private LinearLayout rightLayout;
 
         public ForecastViewHolder(View view) {
             super(view);
@@ -66,6 +90,16 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
             weekday = (TextView) view.findViewById(R.id.weekday);
             max = (TextView) view.findViewById(R.id.item_max);
             min = (TextView) view.findViewById(R.id.item_min);
+            layoutItem = (LinearLayout) view.findViewById(R.id.layout_item);
+            rightLayout = (LinearLayout) view.findViewById(R.id.right_layout);
+
         }
+    }
+
+
+    public interface OnItemClickListener{
+
+        void onItemClick(Forecast forecast, int source);
+
     }
 }
