@@ -1,22 +1,10 @@
 package com.itmaster.myweather.controller;
 
-import android.app.DownloadManager;
 import android.os.AsyncTask;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.itmaster.myweather.Parser;
 import com.itmaster.myweather.model.Forecast;
-import com.itmaster.myweather.view.MainActivity;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
+import com.itmaster.myweather.view.WeatherFragment;
 
 /**
  * Created by yury on 7/26/17.
@@ -24,12 +12,12 @@ import java.net.URLEncoder;
 
 public class MainController extends AsyncTask<String, Void,String>{
 
-    private MainActivity mainActivity;
+    private WeatherFragment weatherFragment;
 
 
 
-    public MainController(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+    public MainController(WeatherFragment weatherFragment) {
+        this.weatherFragment = weatherFragment;
     }
 
 
@@ -37,7 +25,7 @@ public class MainController extends AsyncTask<String, Void,String>{
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mainActivity.showProgressbar();
+        weatherFragment.showProgressbar();
 
     }
 
@@ -55,8 +43,8 @@ public class MainController extends AsyncTask<String, Void,String>{
         super.onPostExecute(s);
 
         Forecast forecast = Parser.getForecast(s);
-        mainActivity.updateWeather(forecast);
+        weatherFragment.updateWeather(forecast);
 
-        mainActivity.hideProgressbar();
+        weatherFragment.hideProgressbar();
     }
 }

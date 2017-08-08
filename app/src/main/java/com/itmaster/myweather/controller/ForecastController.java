@@ -1,20 +1,11 @@
 package com.itmaster.myweather.controller;
 
 import android.os.AsyncTask;
-import android.speech.tts.Voice;
 
 import com.itmaster.myweather.Parser;
 import com.itmaster.myweather.model.Forecast;
-import com.itmaster.myweather.view.ForecastActivity;
+import com.itmaster.myweather.view.ForecastFragment;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -23,11 +14,10 @@ import java.util.List;
 
 public class ForecastController  extends AsyncTask<String, Void, String>{
 
+    private ForecastFragment fragment;
 
-    private ForecastActivity activity;
-
-    public ForecastController(ForecastActivity activity) {
-        this.activity = activity;
+    public ForecastController(ForecastFragment fragment) {
+        this.fragment = fragment;
     }
 
     @Override
@@ -47,9 +37,7 @@ public class ForecastController  extends AsyncTask<String, Void, String>{
         super.onPostExecute(s);
         List<Forecast> forecasts = Parser.getForecastList(s);
 
-        activity.updateForecast(forecasts);
-
-
+        fragment.updateForecast(forecasts);
 
     }
 
