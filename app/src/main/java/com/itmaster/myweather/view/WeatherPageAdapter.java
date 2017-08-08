@@ -31,4 +31,8 @@ public class WeatherPageAdapter extends FragmentPagerAdapter{
     }
 
 
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return "PAGE " + position;
+    }
 }
